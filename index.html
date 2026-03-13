@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tic Tac Toe</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="overlay js-overlay"></div>
+
+    <div class="starting-dialogue js-starting-dialogue">
+      <div class="before js-before"></div>
+      <div class="after js-after"></div>
+      <div class="dialogue-title">
+        <h2>Tic Tac Toe</h2>
+        <p class="mantra">Nine squares. One strategy. Victory in a line.</p>
+      </div>
+      <div class="playing-choice-grid">
+        <div class="pvp-form">
+          <h4>P vs P</h4>
+          <div class="row js-row js-custom-name-container">
+            <label for="player-one-name">Player1 name:</label>
+            <input type="text" name="player-one-name" id="player-one-name" />
+          </div>
+          <div class="row js-row js-custom-name-container">
+            <label for="player-two-name">Player2 name:</label>
+            <input type="text" name="player-two-name" id="player-two-name" />
+          </div>
+          <div class="default-players js-default-players">
+            <input type="checkbox" name="default-choice" id="default-choice" />
+            <label for="default-choice">Or proceed as "Player1" and "Player2"</label>
+          </div>
+        </div>
+        <div class="vs-computer-form">
+          <h4>Play vs Computer</h4>
+          <div class="row js-row js-username-container">
+            <label for="username">Your Username: </label>
+            <input type="text" name="username" id="username" />
+          </div>
+        </div>
+      </div>
+      <button class="proceed js-proceed">Proceed</button>
+    </div>
+
+    <div class="win-popup js-win-popup hidden">
+      <h2>Player <span class="winning-player"></span> Wins!</h2>
+    </div>
+
+    <div class="hero-grid">
+
+      <header class="heading">
+        <h1>Tic Tac Toe</h1>
+        <div class="mode-bar">
+          <p>Game Mode</p>
+          <button class="mode active">Two Players</button>
+          <button class="mode">Play vs Computer</button>
+        </div>
+        <p class="player-turn">
+          <img src="icons/player.svg" alt="" />
+          <span class="turn"></span>
+        </p>
+      </header>
+
+      <!-- player cards wrapper: side-by-side on mobile, display:contents on desktop -->
+      <div class="player-stats">
+
+        <section class="player player1 js-player1">
+          <h3>
+            <img src="icons/player.svg" alt="" />
+            <span class="player-one-name"></span>
+          </h3>
+          <div class="score-row">
+            <div class="label"><img src="icons/trophy.svg" alt="" /> Wins:</div>
+            <span class="wins js-wins"></span>
+          </div>
+          <div class="score-row">
+            <div class="label"><img src="icons/draw.svg" alt="" /> Draws:</div>
+            <span class="draws js-draws"></span>
+          </div>
+          <div class="score-row">
+            <div class="label"><img src="icons/losses.svg" alt="" /> Losses:</div>
+            <span class="losses js-losses"></span>
+          </div>
+        </section>
+
+        <section class="player player2 js-player2">
+          <h3>
+            <img src="icons/player.svg" alt="" />
+            <span class="player-two-name"></span>
+          </h3>
+          <div class="score-row">
+            <div class="label"><img src="icons/trophy.svg" alt="" /> Wins:</div>
+            <span class="wins js-wins"></span>
+          </div>
+          <div class="score-row">
+            <div class="label"><img src="icons/draw.svg" alt="" /> Draws:</div>
+            <span class="draws js-draws"></span>
+          </div>
+          <div class="score-row">
+            <div class="label"><img src="icons/losses.svg" alt="" /> Losses:</div>
+            <span class="losses js-losses"></span>
+          </div>
+        </section>
+
+      </div>
+
+      <main class="game">
+        <div class="cell-container js-cell-container"></div>
+        <button class="restart-button">Restart Game</button>
+      </main>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
