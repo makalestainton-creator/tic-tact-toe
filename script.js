@@ -416,12 +416,13 @@ customUsers.controlInputs();
 
 // FIX: call both on DOMContentLoaded
 document.addEventListener("DOMContentLoaded", () => {
-  // display.displayStartUpDialogue();
+  display.displayStartUpDialogue();
   display.renderBoard();
   display.renderScore();
 });
 
 document.querySelector(".js-proceed").addEventListener("click", () => {
+  let mode = "pvp";
   if (
     (playerOneInput.value && !playerTwoInput.value) ||
     (!playerOneInput.value && playerTwoInput.value)
@@ -442,6 +443,21 @@ document.querySelector(".js-proceed").addEventListener("click", () => {
 
   if (checkBox.checked === true) {
     display.closeDialogue();
+    return;
+  }
+
+  if (vsComputerInput.value) {
+    switchMode("computer");
+
+    players[0].playerName = vsComputerInput.value.trim();
+    playerOneName.textContent = players[0].playerName;
+    playerTwoStats.querySelector("h3").innerHTML = `
+          <img src="icons/computer.svg" alt="" />
+          <span class="player-two-name">Computer</span>
+        `;
+    display.closeDialogue();
+    document.querySelector(".turn").textContent =
+      `${activePlayer.playerName}'s turn`;
     return;
   }
   display.closeDialogue();
@@ -492,11 +508,25 @@ document
         btn.textContent.trim() === "Two Players" ? "pvp" : "computer";
       switchMode(mode);
       if (gameState.mode === "computer") {
+        players[0].playerName = vsComputerInput.value.trim();
+        if(!players[0].playerName) {
+          players[0].playerName = playerOneInput.value.trim();
+        }
+
+        if(!players[0].playerName && ! playerOneInput.value.trim()) {
+          players[0].playerName = "Player1";
+        }
+        playerOneName.textContent = players[0].playerName;
         playerTwoStats.querySelector("h3").innerHTML = `
           <img src="icons/computer.svg" alt="" />
           <span class="player-two-name">Computer</span>
         `;
       } else if (gameState.mode === "pvp") {
+        players[0].playerName = playerOneInput.value.trim();
+        if (!players[0].playerName) {
+          players[0].playerName = "Player1";
+        }
+        playerOneName.textContent = players[0].playerName;
         playerTwoStats.querySelector("h3").innerHTML = `
           <img src="icons/player.svg" alt="" />
           <span class="player-two-name">${players[1].playerName}</span>
