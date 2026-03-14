@@ -177,7 +177,6 @@ const Gameboard = {
 
 // ─── COMPUTER AI ──────────────────────────────────────────────────────────────
 const Computer = {
-
   pickMove() {
     const empty = Gameboard.getEmptyCells();
 
@@ -254,8 +253,9 @@ const display = {
 
   // ADDED: prevents clicks while computer is thinking
   lockBoard(locked) {
-    document.querySelector(".js-cell-container").style.pointerEvents =
-      locked ? "none" : "";
+    document.querySelector(".js-cell-container").style.pointerEvents = locked
+      ? "none"
+      : "";
   },
 
   // ADDED: shared end-of-turn logic used by both human click and computer move
@@ -295,7 +295,9 @@ const display = {
       popup.classList.remove("hidden");
       setTimeout(() => popup.classList.add("hidden"), 3000);
 
-      players.forEach((player) => { player.score.draws++; });
+      players.forEach((player) => {
+        player.score.draws++;
+      });
       display.renderScore();
 
       setTimeout(() => {
@@ -414,7 +416,7 @@ customUsers.controlInputs();
 
 // FIX: call both on DOMContentLoaded
 document.addEventListener("DOMContentLoaded", () => {
-  display.displayStartUpDialogue();
+  // display.displayStartUpDialogue();
   display.renderBoard();
   display.renderScore();
 });
@@ -458,12 +460,16 @@ document.querySelector(".restart-button").addEventListener("click", () => {
 
 function switchMode(mode) {
   gameState.mode = mode;
+  gamePlay.restartGame();
 
   // Sync active state on all mode buttons across mode-bar and game-mode panel
-  document.querySelectorAll(".mode-bar .mode, .game-mode .mode").forEach(btn => {
-    const btnMode = btn.textContent.trim() === "Two Players" ? "pvp" : "computer";
-    btn.classList.toggle("active", btnMode === mode);
-  });
+  document
+    .querySelectorAll(".mode-bar .mode, .game-mode .mode")
+    .forEach((btn) => {
+      const btnMode =
+        btn.textContent.trim() === "Two Players" ? "pvp" : "computer";
+      btn.classList.toggle("active", btnMode === mode);
+    });
 
   // Rename player2 to "Computer" or restore their typed name
   if (mode === "computer") {
@@ -478,9 +484,23 @@ function switchMode(mode) {
   display.renderBoard();
 }
 
-document.querySelectorAll(".mode-bar .mode, .game-mode .mode").forEach(btn => {
-  btn.addEventListener("click", () => {
-    const mode = btn.textContent.trim() === "Two Players" ? "pvp" : "computer";
-    switchMode(mode);
+document
+  .querySelectorAll(".mode-bar .mode, .game-mode .mode")
+  .forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const mode =
+        btn.textContent.trim() === "Two Players" ? "pvp" : "computer";
+      switchMode(mode);
+      if (gameState.mode === "computer") {
+        playerTwoStats.querySelector("h3").innerHTML = `
+          <img src="icons/computer.svg" alt="" />
+          <span class="player-two-name">Computer</span>
+        `;
+      } else if (gameState.mode === "pvp") {
+        playerTwoStats.querySelector("h3").innerHTML = `
+          <img src="icons/player.svg" alt="" />
+          <span class="player-two-name">${players[1].playerName}</span>
+        `;
+      }
+    });
   });
-});
